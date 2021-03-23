@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <meta charset="utf-8">
+    <title>Payment</title>
+  </head>
+  <body class="container">
+    <form data-payment-form="form" id ="test">
+        <h1>Payment form</h1>
+        <p>Required fields are followed by <strong><title="required">*</abbr></strong>.</p>
+        <section class="panel-body">
+            <h2>Contact information</h2>
+            <fieldset>
+                <legend>Title</legend>
+                <ul class="list-unstyled">
+                    <li>
+                        <label for "title_1">
+                            <input type="radio" id="title_1" name="title" value="King" required>
+                            King
+                        </label>
+                    </li>
+                    <li>
+                        <label for="title_2">
+                            <input type="radio" id="title_2" name="title" value="Queen">
+                            Queen
+                        </label>
+                    </li>
+                    <li>
+                        <label for="title_3">
+                            <input type="radio" id="title_3" name="title" value="Joker">
+                            Joker
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+            <p>
+                <label for="name">
+                    <span>Name: </span>
+                    <strong><abbr title="required">*</abbr></strong>
+                </label>
+                <input type="text" id="name" name="username" class="form-control" required>
+            </p>
+            <p>
+                <label for="mail">
+                    <span>E-mail: </span>
+                    <strong><abbr title="required">*</abbr></strong>
+                </label>
+                <input type="email" id="mail" name="usermail" class="form-control" required>
+            </p>
+            <p>
+                <label for="pwd">
+                    <span>Password: </span>
+                    <strong><abbr title="required">*</abbr></strong>
+                </label>
+                <input type="password" id="pwd" name="password" class="form-control" required>
+            </p>
+        </section>
+        <secton class="panel-body">
+            <h2>Payment information</h2>
+            <p>
+                <label for="card">
+                    <span>Card type:</span>
+                </label>
+                <select id="card" name="usercard" class="form-control" required>
+                    <option value="visa">Visa</option>
+                    <option value="mc">Mastercard</option>
+                    <option value="amex">American Express</option>
+                </select>
+            </p>
+            <p>
+                <label for="number">
+                    <span>Card number:</span>
+                    <strong><abbr title="required">*</abbr></strong>
+                </label>
+                <input type="tel" id="number" name="cardnumber" class="form-control" required>
+            </p>
+            <p>
+                <label for="date">
+                    <span>Expiration date:</span>
+                    <strong><abbr title="required">*</abbr></strong>
+                    <em>formatted as mm/dd/yyyy</em>
+                </label>
+                <input type="date" id="date" name="expiration" class="form-control" required>
+            </p>
+        </secton>
+        <span>
+            <div id="dialog-3" title="Payment Received!">Thank you for your payment, <p id="jTitleName"> </p></div>
+            <button type="submit" class="btn btn-default" id="paymentBtn">Validate the payment</button>
+            <a href="index.html" class="btn btn-default">Back to CoffeeRun</a>
+        </span>
+
+    </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="scripts\formhandlerpayment.js" charset="utf-8"></script>
+  <script src="scripts\payment.js" charset="utf-8"></script>
+  </body>
+</html>
