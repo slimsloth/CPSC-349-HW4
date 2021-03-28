@@ -26,7 +26,6 @@
           data[item.name] = item.value;
           console.log(item.name + " is " + item.value);
         });
-
       console.log(data);
       fn(data);
       this.reset();
