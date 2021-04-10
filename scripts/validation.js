@@ -1,15 +1,14 @@
 (function (window) {
-    "use strict";
-    // Code will go here
-    var App = window.App || {};
+  'use strict';
+  var App = window.App || {};
 
-    var Validation = {
-        isCompanyEmail: function (email) {
-            return /.+@bignerdranch\.com$/.test(email);
-        }
-    };
+  var Validation = {
+    isCompanyEmail: function(email) {
+      // return /regex/.test(email);
+      return /.+@starfleet\.com$/.test(email);
+    }
+  }
 
-
-    App.Validation = Validation;
-    window.App = App;
-  })(window);
+  App.Validation = Validation;
+  window.App = App;
+})(window);

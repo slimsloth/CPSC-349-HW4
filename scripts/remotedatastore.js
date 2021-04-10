@@ -1,88 +1,50 @@
 (function (window) {
-  "use strict";
+  'use strict';
+
   var App = window.App || {};
-  //   var $ = window.jQuery;
-  //   function RemoteDataStore(url) {
-  //     if (!url) {
-  //       throw new Error("No remote URL supplied.");
-  //     }
-  //     this.serverUrl = url;
-  //   }
-  //   RemoteDataStore.prototype.add = function (key, val) {
-  //       $.post(this.serverUrl, val, function (serverResponse) {
-  //           console.log(serverResponse);
-  //       });
-  //   };
+  var $ = window.jQuery;
 
-  //   RemoteDataStore.prototype.getAll = function (cb) {
-  //     $.get(this.serverUrl, function (serverResponse) {
-  //         console.log(serverResponse);
-  //         cb(serverResponse);
-  //     });
-  // };
-  // RemoteDataStore.prototype.get = function (key, cb) {
-  //     $.get(this.serverUrl + '/' + key, function(serverResponse) {
-  //         console.log(serverResponse);
-  //         cb(serverResponse);
-  //     });
-  // };
-  // RemoteDataStore.prototype.remove = function(key) {
-  //     //delete this.data[key]
-  //     $.ajax(this.serverUrl + '/' + key, {type: 'DELETE'});
-  // };
-  // RemoteDataStore.prototype.removeAll = function() {
-  //     $.ajax(this.serverUrl, {type: 'DELETE'});
-  // };
-  function RemoteDataStore(url) {
-    if (!url) {
-      throw new Error("No remote URL supplied.");
+  var form = document.querySelector('.myForm');
+  // const admin = require('firebase-admin');
+
+
+  class RemoteDataStore {
+    constructor(url) {
+      console.log('running the DataStore function');
+
+      if (!url) { throw new Error('No remote URL supplied.'); }
+      this.serverURL = url;
     }
-    this.serverUrl = url;
-  }
-  RemoteDataStore.prototype.add = function (val) {
-    db.collection("orders").add({
-      coffeeOrder: val.coffee,
-      emailAddress: val.emailAddress,
-      flavor: val.flavor,
-      size: val.size,
-      strength: val.strength,
-    });
-  };
 
-  RemoteDataStore.prototype.get = function (key) {
-    var queries = [];
-    db.collection("orders")
-      .where("email", "==", key)
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          queries.push(doc.data());
-        });
+    // helps with POST and PUT requests for NON-Firebase requests
+    post_helper(type, url, val) {
+      return $.ajax({ type: type, url: url, contentType: 'application/json',
+        data: JSON.stringify(val),
+        success: function (response) {
+          console.log('function returned: ' + JSON.stringify(response));
+        }
       });
-  };
+    }
 
-  RemoteDataStore.prototype.getAll = function () {
-    var orders = [];
-    db.collection("orders")
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          orders.push(doc.data());
-          console.log(doc.data());
-        });
+    helper(type, url, cb) {
+      return $.ajax({ type: type, url: url, contentType: 'application/json',
+        success: function (response) {
+          console.log('function returned: ' + JSON.stringify(response));
+          if (cb !== undefined) { cb(response); }
+        }
       });
-    return orders;
-  };
+    }
 
-  RemoteDataStore.prototype.remove = function (key) {
-    var orders_query = db.collection("orders").where("emailAddress", "==", key);
-    orders_query.get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        doc.ref.delete();
-      });
-    });
-  };
 
-  App.RemoteDataStore = RemoteDataStore;
-  window.App = App;
+    add(key, val) { return this.post_helper('POST',   this.serverURL, val);             }
+    get(key, cb)  { return this.helper     ('GET',    this.serverURL + '/' + key, cb);  }
+    getAll(cb)    { return this.helper     ('GET',    this.serverURL, cb);              }
+    put(key, val) { return this.post_helper('PUT',    this.serverURL + '/' + key, val); }
+    remove(key)   { return this.helper     ('DELETE', this.serverURL + '/' + key);      }
+  }    
+    
+    App.RemoteDataStore = RemoteDataStore;
+    window.App = App;
+
 })(window);
+
